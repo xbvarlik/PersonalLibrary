@@ -1,6 +1,6 @@
 ﻿namespace PersonalLibrary.API.DTOs.Base;
 
-public interface IBaseUpdateDto
+public interface ICreateDto
 {
     
 }

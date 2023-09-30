@@ -3,5 +3,5 @@
 public class Status : BaseEntity
 {
     public string Description { get; set; } = null!;
-    public ICollection<Book> Books { get; set; } = null!;
+    public virtual ICollection<BooksOfUser>? Books { get; set; } = null!;
 }

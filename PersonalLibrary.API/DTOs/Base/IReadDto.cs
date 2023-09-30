@@ -1,6 +1,6 @@
 ﻿namespace PersonalLibrary.API.DTOs.Base;
 
-public interface IBaseReadDto
+public interface IReadDto
 {
     public Guid Id { get; set; }   
 }
