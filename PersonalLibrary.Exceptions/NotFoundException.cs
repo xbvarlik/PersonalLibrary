@@ -12,3 +12,16 @@ public class NotFoundException : NullReferenceException
         
     }
 }
+
+public class TokenNullException : NullReferenceException
+{
+    public TokenNullException()
+    {
+        
+    }
+
+    public TokenNullException(string message) : base(message)
+    {
+        
+    }
+}

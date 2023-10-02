@@ -12,3 +12,16 @@ public class IdentityException : Exception
         
     }
 }
+
+public class InvalidCredentialsException : IdentityException
+{
+    public InvalidCredentialsException()
+    {
+        
+    }
+
+    public InvalidCredentialsException(string message) : base(message)
+    {
+        
+    }
+}
