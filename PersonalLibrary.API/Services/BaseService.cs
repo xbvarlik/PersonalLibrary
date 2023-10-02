@@ -8,9 +8,9 @@ namespace PersonalLibrary.API.Services;
 
 public abstract class BaseService<TEntity, TCreateDto, TReadDto, TUpdateDto>
     where TEntity : BaseEntity
-    where TCreateDto : IBaseCreateDto
-    where TReadDto : IBaseReadDto
-    where TUpdateDto : IBaseUpdateDto
+    where TCreateDto : ICreateDto
+    where TReadDto : IReadDto
+    where TUpdateDto : IUpdateDto
 {
     protected readonly AppDbContext _context;
     protected readonly DbSet<TEntity> _dbSet;

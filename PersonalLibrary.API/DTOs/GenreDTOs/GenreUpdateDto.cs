@@ -4,5 +4,5 @@ namespace PersonalLibrary.API.DTOs.GenreDTOs;
 
 public class GenreUpdateDto : IUpdateDto
 {
-    public string Name { get; set; } = null!;
+    public string? Name { get; set; }
 }

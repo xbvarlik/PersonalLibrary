@@ -12,4 +12,5 @@ public class TagsOfUserReadDto : IReadDto
     public string UserId { get; set; } = null!;
     
     public virtual ICollection<BooksOfUserReadDto>? Books { get; set; } = null!;
+
 }
