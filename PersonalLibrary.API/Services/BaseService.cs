@@ -25,7 +25,7 @@ public abstract class BaseService<TEntity, TCreateDto, TReadDto, TUpdateDto>
 
     public abstract Task<ICollection<TEntity>> GetAllAsync();
     
-    public abstract Task<TEntity> GetByIdAsync(Guid id);
+    public abstract Task<TEntity> GetByIdAsync(int id);
     
     public virtual async Task<TReadDto> CreateAsync(TCreateDto dto)
     {

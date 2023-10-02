@@ -27,6 +27,9 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
+              "D:\\Codes\\Rider\\UdemyEFCore\\PersonalLibrary\\PersonalLibrary.Exceptions\\PersonalLibrary.Exceptions.csproj": {
+                "projectPath": "D:\\Codes\\Rider\\UdemyEFCore\\PersonalLibrary\\PersonalLibrary.Exceptions\\PersonalLibrary.Exceptions.csproj"
+              },
               "D:\\Codes\\Rider\\UdemyEFCore\\PersonalLibrary\\PersonalLibrary.Repository\\PersonalLibrary.Repository.csproj": {
                 "projectPath": "D:\\Codes\\Rider\\UdemyEFCore\\PersonalLibrary\\PersonalLibrary.Repository\\PersonalLibrary.Repository.csproj"
               }
@@ -73,6 +76,59 @@
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
             },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.305\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Codes\\Rider\\UdemyEFCore\\PersonalLibrary\\PersonalLibrary.Exceptions\\PersonalLibrary.Exceptions.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Codes\\Rider\\UdemyEFCore\\PersonalLibrary\\PersonalLibrary.Exceptions\\PersonalLibrary.Exceptions.csproj",
+        "projectName": "PersonalLibrary.Exceptions",
+        "projectPath": "D:\\Codes\\Rider\\UdemyEFCore\\PersonalLibrary\\PersonalLibrary.Exceptions\\PersonalLibrary.Exceptions.csproj",
+        "packagesPath": "C:\\Users\\lanes\\.nuget\\packages\\",
+        "outputPath": "D:\\Codes\\Rider\\UdemyEFCore\\PersonalLibrary\\PersonalLibrary.Exceptions\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\lanes\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
