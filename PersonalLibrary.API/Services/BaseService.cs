@@ -35,7 +35,7 @@ public abstract class BaseService<TEntity, TCreateDto, TReadDto, TUpdateDto>
         return _mapper.ToDto(entity);
     }
     
-    public virtual async Task UpdateAsync(Guid id, TUpdateDto dto)
+    public virtual async Task UpdateAsync(int id, TUpdateDto dto)
     {
         var entity = await _context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id);
         
@@ -48,7 +48,7 @@ public abstract class BaseService<TEntity, TCreateDto, TReadDto, TUpdateDto>
         
     }
     
-    public virtual async Task DeleteAsync(Guid id)
+    public virtual async Task DeleteAsync(int id)
     {
         var entity = await _context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id);
         if (entity == null) throw new KeyNotFoundException($"Entity not found with id {id}");

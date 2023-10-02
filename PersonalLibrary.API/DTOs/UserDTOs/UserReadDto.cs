@@ -7,9 +7,9 @@ namespace PersonalLibrary.API.DTOs.UserDTOs;
 
 public class UserReadDto : IReadDto
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     
-    public string UserId { get; set; } = null!;
+    public int UserId { get; set; }
     public string UserName { get; set; } = null!;
     public string Email { get; set; } = null!;
     public virtual ICollection<BooksOfUserReadDto>? Books { get; set; }

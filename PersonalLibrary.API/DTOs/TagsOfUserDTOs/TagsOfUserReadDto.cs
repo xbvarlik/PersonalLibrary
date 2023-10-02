@@ -5,7 +5,7 @@ namespace PersonalLibrary.API.DTOs.TagsOfUserDTOs;
 
 public class TagsOfUserReadDto : IReadDto
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     
     public string TagName { get; set; } = null!;
     

@@ -2,5 +2,5 @@
 
 public interface IReadDto
 {
-    public Guid Id { get; set; }   
+    public int Id { get; set; }   
 }

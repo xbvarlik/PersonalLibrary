@@ -5,7 +5,7 @@ using PersonalLibrary.Repository.Entities;
 
 namespace PersonalLibrary.Repository;
 
-public class AppDbContext : IdentityDbContext<User, Role, string>
+public class AppDbContext : IdentityDbContext<User, Role, int>
 {
     public DbSet<Author> Authors { get; set; } = null!;
     public DbSet<Book> Books { get; set; } = null!;

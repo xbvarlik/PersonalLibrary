@@ -9,15 +9,15 @@ namespace PersonalLibrary.API.DTOs.BooksOfUserDTOs;
 
 public class BooksOfUserReadDto : IReadDto
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     
     public string UserId { get; set; } = null!;
 
-    public Guid BookId { get; set; }
+    public int BookId { get; set; }
 
-    public Guid StatusId { get; set; }
+    public int StatusId { get; set; }
 
-    public Guid TagsOfUserId { get; set; }
+    public int TagsOfUserId { get; set; }
 
     public virtual UserReadDto? User { get; set; }
 

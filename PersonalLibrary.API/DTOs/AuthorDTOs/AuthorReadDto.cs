@@ -5,7 +5,7 @@ namespace PersonalLibrary.API.DTOs.AuthorDTOs;
 
 public class AuthorReadDto : IReadDto
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; } = null!;
     
     public virtual ICollection<BookReadDto>? Books { get; set; }

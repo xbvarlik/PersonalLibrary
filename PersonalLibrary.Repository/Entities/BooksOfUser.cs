@@ -6,11 +6,11 @@ public class BooksOfUser : BaseEntity
 {
     public string UserId { get; set; } = null!;
 
-    public Guid BookId { get; set; }
+    public int BookId { get; set; }
 
-    public Guid StatusId { get; set; }
+    public int StatusId { get; set; }
 
-    public Guid TagsOfUserId { get; set; }
+    public int TagsOfUserId { get; set; }
 
     [DeleteBehavior(DeleteBehavior.NoAction)]
     public virtual User? User { get; set; }
