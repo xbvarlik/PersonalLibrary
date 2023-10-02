@@ -9,7 +9,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-                User superAdmin = new()
+        User superAdmin = new()
         {
             Id = 1,
             UserName = "SuperAdmin@nttdata.com",

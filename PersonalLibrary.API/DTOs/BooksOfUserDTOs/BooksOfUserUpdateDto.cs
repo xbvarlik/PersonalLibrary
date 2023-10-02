@@ -4,7 +4,7 @@ namespace PersonalLibrary.API.DTOs.BooksOfUserDTOs;
 
 public class BooksOfUserUpdateDto : IUpdateDto
 {
-    public string? UserId { get; set; }
+    public int? UserId { get; set; }
 
     public int? BookId { get; set; }
 

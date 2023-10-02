@@ -21,7 +21,7 @@ public class BookReadDto : IReadDto
 
     public string CoverImage { get; set; } = null!;
 
-    public int Isbn { get; set; }
+    public long Isbn { get; set; }
 
     public int AuthorId { get; set; }
 

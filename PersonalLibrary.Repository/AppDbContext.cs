@@ -14,6 +14,7 @@ public class AppDbContext : IdentityDbContext<User, Role, int>
     public DbSet<Publisher> Publishers { get; set; } = null!;
     public DbSet<Status> Status { get; set; } = null!;
     public DbSet<TagsOfUser> TagsOfUsers { get; set; } = null!;
+    public DbSet<AppRefreshToken> AppRefreshTokens { get; set; } = null!;
 
     public AppDbContext()
     {
@@ -90,6 +91,10 @@ public class AppDbContext : IdentityDbContext<User, Role, int>
             
             builder.Entity(entityType.ClrType).HasQueryFilter(filter);
         }
+        
+        // for seed data
+        builder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+        
         base.OnModelCreating(builder);
     }
 }

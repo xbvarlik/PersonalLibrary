@@ -4,7 +4,7 @@ namespace PersonalLibrary.API.DTOs.BooksOfUserDTOs;
 
 public class BooksOfUserCreateDto : ICreateDto
 {
-    public string UserId { get; set; } = null!;
+    public int UserId { get; set; } 
 
     public int BookId { get; set; }
 

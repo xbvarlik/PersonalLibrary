@@ -4,7 +4,7 @@ namespace PersonalLibrary.Repository.Entities;
 
 public class BooksOfUser : BaseEntity
 {
-    public string UserId { get; set; } = null!;
+    public int UserId { get; set; } 
 
     public int BookId { get; set; }
 

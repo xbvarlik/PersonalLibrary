@@ -12,7 +12,9 @@ public class Book : BaseEntity
 
     public string CoverImage { get; set; } = null!;
 
-    public int Isbn { get; set; }
+    public string Description { get; set; } = null!;
+    
+    public long Isbn { get; set; }
 
     public int AuthorId { get; set; }
 

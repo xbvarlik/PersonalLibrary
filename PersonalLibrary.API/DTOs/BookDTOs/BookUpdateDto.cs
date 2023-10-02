@@ -14,7 +14,7 @@ public class BookUpdateDto : IUpdateDto
 
     public string? CoverImage { get; set; }
 
-    public int? Isbn { get; set; }
+    public long? Isbn { get; set; }
 
     public int? AuthorId { get; set; }
 
