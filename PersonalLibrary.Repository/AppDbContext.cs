@@ -8,12 +8,12 @@ namespace PersonalLibrary.Repository;
 public class AppDbContext : IdentityDbContext<User, Role, int>
 {
     public DbSet<Author> Authors { get; set; } = null!;
-    public DbSet<Book> Books { get; set; } = null!;
-    public DbSet<BooksOfUser> BooksOfUsers { get; set; } = null!;
     public DbSet<Genre> Genres { get; set; } = null!;
     public DbSet<Publisher> Publishers { get; set; } = null!;
     public DbSet<Status> Status { get; set; } = null!;
     public DbSet<TagsOfUser> TagsOfUsers { get; set; } = null!;
+    public DbSet<Book> Books { get; set; } = null!;
+    public DbSet<BooksOfUser> BooksOfUsers { get; set; } = null!;
     public DbSet<AppRefreshToken> AppRefreshTokens { get; set; } = null!;
 
     public AppDbContext()

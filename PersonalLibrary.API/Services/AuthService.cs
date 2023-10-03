@@ -13,13 +13,17 @@ public class AuthService
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
     private readonly TokenManager _tokenManager;
+    private readonly IConfiguration _configuration;
+    private readonly EmailManager _emailManager;
 
-    public AuthService(AppDbContext context, UserManager<User> userManager, SignInManager<User> signInManager, TokenManager tokenManager)
+    public AuthService(AppDbContext context, UserManager<User> userManager, SignInManager<User> signInManager, TokenManager tokenManager, EmailManager emailManager, IConfiguration configuration)
     {
         _context = context;
         _userManager = userManager;
         _signInManager = signInManager;
         _tokenManager = tokenManager;
+        _emailManager = emailManager;
+        _configuration = configuration;
     }
 
     public async Task<IdentityResult> SignUpAsync(SignUpDto signUpDto)
@@ -73,5 +77,35 @@ public class AuthService
         if (refreshToken == null) throw new TokenNullException("Refresh token not found");
         
         return await _tokenManager.CreateAccessTokenByRefreshTokenAsync(refreshToken);
+    }
+    
+    public async Task<string> ForgotPasswordAsync(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        
+        if (user is null) throw new NotFoundException("User not found");
+        
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var appUrl = _configuration["profiles:https:applicationUrl"];
+        var callbackUrl = $"{appUrl}/api/auth/reset-password?email={email}&token={token}";
+
+        Console.WriteLine(callbackUrl);
+        
+        await _emailManager.SendEmail(callbackUrl, email);
+        
+        return "Reset password url sent to your email";
+    }
+
+    public async Task<IdentityResult> ResetPasswordAsync(int userId, string token, ResetPasswordDto dto)
+    {
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+        
+        if (user is null) throw new NotFoundException("User not found");
+        
+        var result = await _userManager.ResetPasswordAsync(user, token, dto.NewPassword);
+        
+        if (!result.Succeeded) throw new IdentityException("Password can not be reset");
+        
+        return result;
     }
 }

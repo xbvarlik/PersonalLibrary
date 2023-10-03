@@ -18,9 +18,6 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
                 GenreId = 1,
                 PublisherId = 1,
                 Description = "The Lord of the Rings is an epic high fantasy novel by the English author and scholar J. R. R. Tolkien.",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
-                IsDeleted = false,
                 PublishDate = new DateTime(2022, 3,29),  
                 NumberOfPages = 1016,                    
                 Edition = 16,                           
@@ -35,15 +32,11 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
                 GenreId = 1,
                 PublisherId = 1,
                 Description = "The Hobbit, or There and Back Again is a children's fantasy novel by English author J. R. R. Tolkien.",
-                PublishDate = new DateTime(2015, 2, 29),  
+                PublishDate = new DateTime(2015, 2, 20),  
                 NumberOfPages = 425,                    
                 Edition = 8,                            
                 CoverImage = "lord_of_the_rings.jpg",   
                 Isbn = 9789752733732,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
-                IsDeleted = false,
-                
             },
             new Book()
             {
@@ -58,9 +51,6 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
                 Edition = 1,                            
                 CoverImage = "lord_of_the_rings.jpg",   
                 Isbn = 9780395489321,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
-                IsDeleted = false,
             },
             new Book()
             {
@@ -75,9 +65,6 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
                 Edition = 16,                            
                 CoverImage = "lord_of_the_rings.jpg",   
                 Isbn = 9786053754794,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
-                IsDeleted = false,
             },
             new Book()
             {
@@ -92,9 +79,6 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
                 Edition = 4,                            
                 CoverImage = "lord_of_the_rings.jpg",   
                 Isbn = 9786052291954,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
-                IsDeleted = false,
             },
             new Book()
             {
@@ -109,9 +93,6 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
                 Edition = 3,                            
                 CoverImage = "lord_of_the_rings.jpg",   
                 Isbn = 9786053758303,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
-                IsDeleted = false,
             },
             new Book()
             {
@@ -126,26 +107,20 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
                 Edition = 1,                            
                 CoverImage = "lord_of_the_rings.jpg",   
                 Isbn = 9786257737753,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
-                IsDeleted = false,
             },
             new Book()
             {
                 Id = 8,
                 Title = "Animal Farm",
                 AuthorId = 5,
-                GenreId = 3,
-                PublisherId = 5,
+                GenreId = 5,
+                PublisherId = 1,
                 Description = "Animal Farm is an allegorical novella by George Orwell, first published in England on 17 August 1945.",
                 PublishDate = new DateTime(2021, 1, 16),  
                 NumberOfPages = 131,                    
                 Edition = 1,                            
                 CoverImage = "lord_of_the_rings.jpg",   
                 Isbn = 9786257737746,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
-                IsDeleted = false,
             },
         });  
     }
