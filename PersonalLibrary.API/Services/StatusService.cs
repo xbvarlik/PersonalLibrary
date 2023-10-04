@@ -7,13 +7,16 @@ using PersonalLibrary.Repository.Entities;
 
 namespace PersonalLibrary.API.Services;
 
-public class StatusService : BaseService<Status, StatusCreateDto, StatusReadDto, StatusUpdateDto>
+public class StatusService : BaseService<Status, StatusCreateDto, StatusReadDto, StatusUpdateDto, StatusQueryFilterDto>
 {
     public StatusService(AppDbContext context, StatusMapper mapper) : base(context, mapper) { }
 
-    public override async Task<ICollection<Status>> GetAllAsync()
+    public override async Task<ICollection<Status>> GetAllAsync(StatusQueryFilterDto query)
     {
-        return await _dbSet.AsNoTracking().Include(x => x.Books).ToListAsync();
+        var data = _dbSet.AsQueryable();
+        data = QuerySpecification(query, data);
+        
+        return await data.Include(x => x.Books).ToListAsync();
     }
 
     public override async Task<Status> GetByIdAsync(int id)

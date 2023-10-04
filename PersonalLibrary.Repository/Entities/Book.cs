@@ -10,7 +10,7 @@ public class Book : BaseEntity
 
     public int Edition { get; set; }
 
-    public string CoverImage { get; set; } = null!;
+    public string? CoverImage { get; set; }
 
     public string Description { get; set; } = null!;
     

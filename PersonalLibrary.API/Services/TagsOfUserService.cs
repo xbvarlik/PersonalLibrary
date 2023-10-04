@@ -7,13 +7,16 @@ using PersonalLibrary.Repository.Entities;
 
 namespace PersonalLibrary.API.Services;
 
-public class TagsOfUserService : BaseService<TagsOfUser, TagsOfUserCreateDto, TagsOfUserReadDto, TagsOfUserUpdateDto>
+public class TagsOfUserService : BaseService<TagsOfUser, TagsOfUserCreateDto, TagsOfUserReadDto, TagsOfUserUpdateDto, TagsOfUserQueryFilterDto>
 {
     public TagsOfUserService(AppDbContext context, TagsOfUserMapper mapper) : base(context, mapper) { }
 
-    public override async Task<ICollection<TagsOfUser>> GetAllAsync()
+    public override async Task<ICollection<TagsOfUser>> GetAllAsync(TagsOfUserQueryFilterDto query)
     {
-        return await _dbSet.AsNoTracking()
+        var data = _dbSet.AsQueryable();
+        data = QuerySpecification(query, data);
+        
+        return await data
             .Include(x => x.User)
             .Include(x => x.Books)
             .ToListAsync();

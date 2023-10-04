@@ -12,7 +12,7 @@ public class BookUpdateDto : IUpdateDto
 
     public int? Edition { get; set; }
 
-    public string? CoverImage { get; set; }
+    public IFormFile? CoverImage { get; set; }
 
     public long? Isbn { get; set; }
 

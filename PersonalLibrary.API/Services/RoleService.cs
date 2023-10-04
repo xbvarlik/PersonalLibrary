@@ -37,31 +37,30 @@ public class RoleService
     
     public async Task<RoleReadDto> CreateRoleAsync(RoleCreateDto dto)
     {
-        var role = _mapper.MapToEntity(dto);
+        var role = _mapper.ToEntity(dto);
         var result = await _roleManager.CreateAsync(role);
         
         if (!result.Succeeded) throw new IdentityException("Error creating role");
         
         await _context.SaveChangesAsync();
-        return _mapper.MapToDto(role);
+        return _mapper.ToDto(role);
     }
 
-    public async Task<IdentityResult> UpdateRoleAsync(int id, RoleUpdateDto dto)
+    public async Task UpdateRoleAsync(int id, RoleUpdateDto dto)
     {
         var role = await _roleManager.Roles.FirstOrDefaultAsync(x => x.Id == id);
         
         if (role == null) throw new NotFoundException("Role not found");
         
-        role = _mapper.MapToEntity(dto, role);
+        role = _mapper.ToEntity(dto, role);
         var result = await _roleManager.UpdateAsync(role);
         
         if (!result.Succeeded) throw new IdentityException("Error updating role");
         
         await _context.SaveChangesAsync();
-        return result;
     }
     
-    public async Task<IdentityResult> DeleteRoleAsync(int id)
+    public async Task DeleteRoleAsync(int id)
     {
         var role = await _roleManager.Roles.FirstOrDefaultAsync(x => x.Id == id);
         
@@ -72,6 +71,5 @@ public class RoleService
         if (!result.Succeeded) throw new IdentityException("Error deleting role");
         
         await _context.SaveChangesAsync();
-        return result;
     }
 }

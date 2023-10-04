@@ -19,7 +19,7 @@ public class BookReadDto : IReadDto
 
     public int Edition { get; set; }
 
-    public string CoverImage { get; set; } = null!;
+    public byte[] CoverImage { get; set; } = null!;
 
     public long Isbn { get; set; }
 

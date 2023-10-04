@@ -17,7 +17,6 @@ public class BookMapper : BaseMapper<Book, BookCreateDto, BookReadDto, BookUpdat
             PublisherId = dto.PublisherId,
             PublishDate = dto.PublishDate,
             Edition = dto.Edition,
-            CoverImage = dto.CoverImage
         };
     }
 
@@ -31,7 +30,6 @@ public class BookMapper : BaseMapper<Book, BookCreateDto, BookReadDto, BookUpdat
         entity.PublisherId = dto.PublisherId ?? entity.PublisherId;
         entity.PublishDate = dto.PublishDate ?? entity.PublishDate;
         entity.Edition = dto.Edition ?? entity.Edition;
-        entity.CoverImage = dto.CoverImage ?? entity.CoverImage;
 
         return entity;
     }
@@ -49,7 +47,6 @@ public class BookMapper : BaseMapper<Book, BookCreateDto, BookReadDto, BookUpdat
             PublisherId = entity.PublisherId,
             PublishDate = entity.PublishDate,
             Edition = entity.Edition,
-            CoverImage = entity.CoverImage,
             Author = entity.Author is null ? null : new AuthorMapper().ToDto(entity.Author),
             Genre = entity.Genre is null ? null : new GenreMapper().ToDto(entity.Genre),
             Publisher = entity.Publisher is null ? null : new PublisherMapper().ToDto(entity.Publisher)

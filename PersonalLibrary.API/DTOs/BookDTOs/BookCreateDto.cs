@@ -12,7 +12,7 @@ public class BookCreateDto : ICreateDto
 
     public int Edition { get; set; }
 
-    public string CoverImage { get; set; } = null!;
+    public IFormFile? CoverImage { get; set; }
 
     public long Isbn { get; set; }
 

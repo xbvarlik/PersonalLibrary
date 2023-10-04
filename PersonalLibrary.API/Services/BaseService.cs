@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using PersonalLibrary.API.DTOs.Base;
 using PersonalLibrary.API.Mappings;
 using PersonalLibrary.Repository;
@@ -6,11 +7,12 @@ using PersonalLibrary.Repository.Entities;
 
 namespace PersonalLibrary.API.Services;
 
-public abstract class BaseService<TEntity, TCreateDto, TReadDto, TUpdateDto>
+public abstract class BaseService<TEntity, TCreateDto, TReadDto, TUpdateDto, TQueryFilterDto>
     where TEntity : BaseEntity
     where TCreateDto : ICreateDto
     where TReadDto : IReadDto
     where TUpdateDto : IUpdateDto
+    where TQueryFilterDto : IQueryFilterDto
 {
     protected readonly AppDbContext _context;
     protected readonly DbSet<TEntity> _dbSet;
@@ -23,7 +25,7 @@ public abstract class BaseService<TEntity, TCreateDto, TReadDto, TUpdateDto>
         _dbSet = _context.Set<TEntity>();
     }
 
-    public abstract Task<ICollection<TEntity>> GetAllAsync();
+    public abstract Task<ICollection<TEntity>> GetAllAsync(TQueryFilterDto query);
     
     public abstract Task<TEntity> GetByIdAsync(int id);
     
@@ -57,4 +59,47 @@ public abstract class BaseService<TEntity, TCreateDto, TReadDto, TUpdateDto>
         await _context.SaveChangesAsync();
     }
     
+    protected IQueryable<TEntity> QuerySpecification(TQueryFilterDto query, IQueryable<TEntity> queryableData)
+    {
+        var properties = typeof(TQueryFilterDto).GetProperties().ToList();
+        foreach (var property in properties)
+        {
+            var value = property.GetValue(query);
+                
+            if (value != null)
+            {
+                queryableData = ApplyPropertyFilter(queryableData, property.Name, value);
+            }
+        }
+            
+        return queryableData;
+    }
+    
+    private static IQueryable<TEntity> ApplyPropertyFilter(IQueryable<TEntity> queryable, string propertyName, object? value)
+    {
+        var parameter = Expression.Parameter(typeof(TEntity), "entity");
+        var property = Expression.Property(parameter, propertyName);
+        
+        if (property.Type.IsGenericType && property.Type.GetGenericTypeDefinition() == typeof(Nullable<>))
+        {
+            var underlyingType = Nullable.GetUnderlyingType(property.Type);
+            var convertedValue = value != null ? Convert.ChangeType(value, underlyingType!) : null;
+
+            var hasValueProperty = Expression.Property(property, "HasValue");
+            var getValueProperty = Expression.Property(property, "Value");
+            var equals = Expression.Equal(getValueProperty, Expression.Constant(convertedValue));
+            
+            var condition = Expression.AndAlso(hasValueProperty, equals);
+            var lambda = Expression.Lambda<Func<TEntity, bool>>(condition, parameter);
+
+            return queryable.Where(lambda);
+        }
+        else
+        {
+            var equals = Expression.Equal(property, Expression.Constant(value));
+            var lambda = Expression.Lambda<Func<TEntity, bool>>(equals, parameter);
+
+            return queryable.Where(lambda);
+        }
+    }
 }

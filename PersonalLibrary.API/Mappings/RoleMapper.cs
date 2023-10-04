@@ -5,7 +5,7 @@ namespace PersonalLibrary.API.Mappings;
 
 public class RoleMapper 
 {
-    public RoleReadDto MapToDto(Role entity)
+    public RoleReadDto ToDto(Role entity)
     {
         return new RoleReadDto
         {
@@ -14,7 +14,7 @@ public class RoleMapper
         };
     }
     
-    public Role MapToEntity(RoleCreateDto dto)
+    public Role ToEntity(RoleCreateDto dto)
     {
         return new Role
         {
@@ -24,7 +24,7 @@ public class RoleMapper
         };
     }
     
-    public Role MapToEntity(RoleUpdateDto dto, Role entity)
+    public Role ToEntity(RoleUpdateDto dto, Role entity)
     {
         entity.Name = dto.Name ?? entity.Name;
         entity.NormalizedName = entity.Name?.ToUpper();
