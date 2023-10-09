@@ -18,7 +18,7 @@ public class TagsOfUserService : BaseService<TagsOfUser, TagsOfUserCreateDto, Ta
         
         return await data
             .Include(x => x.User)
-            .Include(x => x.Books)
+            .Include(x => x.BooksOfUsers)
             .ToListAsync();
     }
 
@@ -26,7 +26,7 @@ public class TagsOfUserService : BaseService<TagsOfUser, TagsOfUserCreateDto, Ta
     {
         var entity = await _dbSet
             .Include(x => x.User)
-            .Include(x => x.Books)
+            .Include(x => x.BooksOfUsers)
             .FirstOrDefaultAsync(x => x.Id == id);
 
         if (entity == null) throw new NotFoundException();

@@ -2,12 +2,12 @@
 using PersonalLibrary.API.DTOs.Base;
 using PersonalLibrary.API.DTOs.GenreDTOs;
 using PersonalLibrary.API.DTOs.PublisherDTOs;
+using PersonalLibrary.API.Interfaces;
 using PersonalLibrary.API.Mappings;
-using PersonalLibrary.Repository.Entities;
 
 namespace PersonalLibrary.API.DTOs.BookDTOs;
 
-public class BookReadDto : IReadDto
+public class BookReadDto : IReadDto, IExcludeNavigationProperty
 {
     public int Id { get; set; }
     
@@ -34,4 +34,19 @@ public class BookReadDto : IReadDto
     public virtual PublisherReadDto? Publisher { get; set; }
 
     public virtual GenreReadDto? Genre { get; set; }
+    public void ExcludeNavigationProperty(string callerName)
+    {
+        switch (callerName)
+        {
+            case nameof(AuthorMapper):
+                this.Author = null;
+                break;
+            case nameof(GenreMapper):
+                this.Genre = null;
+                break;
+            case nameof(PublisherMapper):
+                this.Publisher = null;
+                break;
+        }
+    }
 }

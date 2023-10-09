@@ -1,14 +1,14 @@
 using PersonalLibrary.API;
+using PersonalLibrary.Cache;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddSqlContext(builder.Configuration);
-builder.Services.AddIdentityService();
+builder.Services.AddInMemoryCache(builder.Configuration);
+builder.Services.ConfigureApplicationSettings();
+builder.Services.AddApplicationDatabases(builder.Configuration);
+builder.Services.AddApplicationServicesAndMappers();
+builder.Services.AddIdentityService(builder.Configuration);
 
 var app = builder.Build();
 
@@ -20,6 +20,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

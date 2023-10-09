@@ -5,6 +5,9 @@ namespace PersonalLibrary.API.Mappings;
 
 public class BookMapper : BaseMapper<Book, BookCreateDto, BookReadDto, BookUpdateDto>
 {
+    protected override List<string>? NavigationProperties { get; set; } =
+        new() { nameof(Book.Author), nameof(Book.Genre), nameof(Book.Publisher) };
+
     public override Book ToEntity(BookCreateDto dto)
     {
         return new Book
@@ -34,7 +37,7 @@ public class BookMapper : BaseMapper<Book, BookCreateDto, BookReadDto, BookUpdat
         return entity;
     }
 
-    public override BookReadDto ToDto(Book entity)
+    protected override BookReadDto MapOtherProperties(Book entity)
     {
         return new BookReadDto
         {
@@ -47,9 +50,6 @@ public class BookMapper : BaseMapper<Book, BookCreateDto, BookReadDto, BookUpdat
             PublisherId = entity.PublisherId,
             PublishDate = entity.PublishDate,
             Edition = entity.Edition,
-            Author = entity.Author is null ? null : new AuthorMapper().ToDto(entity.Author),
-            Genre = entity.Genre is null ? null : new GenreMapper().ToDto(entity.Genre),
-            Publisher = entity.Publisher is null ? null : new PublisherMapper().ToDto(entity.Publisher)
         };
     }
 }

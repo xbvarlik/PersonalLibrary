@@ -6,6 +6,8 @@ namespace PersonalLibrary.API.Mappings;
 
 public class GenreMapper : BaseMapper<Genre, GenreCreateDto, GenreReadDto, GenreUpdateDto>
 {
+    protected override List<string>? NavigationProperties { get; set; } = new() { nameof(Genre.Books) };
+
     public override Genre ToEntity(GenreCreateDto dto)
     {
         return new Genre
@@ -20,13 +22,12 @@ public class GenreMapper : BaseMapper<Genre, GenreCreateDto, GenreReadDto, Genre
         return entity;
     }
 
-    public override GenreReadDto ToDto(Genre entity)
+    protected override GenreReadDto MapOtherProperties(Genre entity)
     {
         return new GenreReadDto
         {
             Id = entity.Id,
             Name = entity.Name,
-            Books = entity.Books?.Select(b => new BookMapper().ToDto(b)).ToList()
         };
     }
 }

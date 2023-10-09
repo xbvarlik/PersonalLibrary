@@ -30,7 +30,7 @@ public class UserMapper
             UserId = entity.Id,
             UserName = entity.UserName,
             Email = entity.Email,
-            Books = entity.BooksOfUsers?.Select(b => new BooksOfUserMapper().ToDto(b)).ToList()
+            Books = entity.BooksOfUsers?.Select(b => new BooksOfUserMapper().ToDto(b, false)).ToList()
         };
     }
 }

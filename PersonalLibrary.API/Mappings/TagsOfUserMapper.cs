@@ -5,6 +5,9 @@ namespace PersonalLibrary.API.Mappings;
 
 public class TagsOfUserMapper : BaseMapper<TagsOfUser, TagsOfUserCreateDto, TagsOfUserReadDto, TagsOfUserUpdateDto>
 {
+    protected override List<string>? NavigationProperties { get; set; } = 
+        new() { nameof(TagsOfUser.BooksOfUsers), nameof(TagsOfUser.User) };
+
     public override TagsOfUser ToEntity(TagsOfUserCreateDto dto)
     {
         return new TagsOfUser
@@ -20,13 +23,12 @@ public class TagsOfUserMapper : BaseMapper<TagsOfUser, TagsOfUserCreateDto, Tags
         return entity;
     }
 
-    public override TagsOfUserReadDto ToDto(TagsOfUser entity)
+    protected override TagsOfUserReadDto MapOtherProperties(TagsOfUser entity)
     {
         return new TagsOfUserReadDto
         {
             Id = entity.Id,
-            TagName = entity.TagName,
-            Books = entity.Books?.Select(b => new BooksOfUserMapper().ToDto(b)).ToList()
+            TagName = entity.TagName
         };
     }
 }

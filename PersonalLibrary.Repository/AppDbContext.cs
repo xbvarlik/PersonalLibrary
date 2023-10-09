@@ -28,6 +28,10 @@ public class AppDbContext : IdentityDbContext<User, Role, int>
     
     public override int SaveChanges()
     {
+        // CACHE 
+        // CONTEXT
+        // OVERLOAD
+        
         ChangeTracker.Entries().ToList().ForEach(e =>
         {
             if (e.Entity is BaseEntity b)

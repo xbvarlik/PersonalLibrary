@@ -5,6 +5,8 @@ namespace PersonalLibrary.API.Mappings;
 
 public class PublisherMapper : BaseMapper<Publisher, PublisherCreateDto, PublisherReadDto, PublisherUpdateDto>
 {
+    protected override List<string>? NavigationProperties { get; set; } = new() { nameof(Publisher.Books) };
+
     public override Publisher ToEntity(PublisherCreateDto dto)
     {
         return new Publisher
@@ -19,13 +21,12 @@ public class PublisherMapper : BaseMapper<Publisher, PublisherCreateDto, Publish
         return entity;
     }
 
-    public override PublisherReadDto ToDto(Publisher entity)
+    protected override PublisherReadDto MapOtherProperties(Publisher entity)
     {
         return new PublisherReadDto
         {
             Id = entity.Id,
             Name = entity.Name,
-            Books = entity.Books?.Select(b => new BookMapper().ToDto(b)).ToList()
-        };
+        };    
     }
 }

@@ -5,6 +5,8 @@ namespace PersonalLibrary.API.Mappings;
 
 public class StatusMapper : BaseMapper<Status, StatusCreateDto, StatusReadDto, StatusUpdateDto>
 {
+    protected override List<string>? NavigationProperties { get; set; } = new() { nameof(Status.BooksOfUsers) };
+
     public override Status ToEntity(StatusCreateDto dto)
     {
         return new Status
@@ -20,13 +22,12 @@ public class StatusMapper : BaseMapper<Status, StatusCreateDto, StatusReadDto, S
         return entity;
     }
 
-    public override StatusReadDto ToDto(Status entity)
+    protected override StatusReadDto MapOtherProperties(Status entity)
     {
         return new StatusReadDto
         {
             Id = entity.Id,
             Description = entity.Description,
-            Books = entity.Books?.Select(b => new BooksOfUserMapper().ToDto(b)).ToList()
         };
     }
 }

@@ -2,5 +2,5 @@
 
 public static class Constants
 {
-    public const string DefaultImagePath = @"D:\Projects\PersonalLibrary\PersonalLibrary.API\wwwroot\images";
+    public const string DefaultImagePath = @"D:\Codes\LibraryImages";
 }

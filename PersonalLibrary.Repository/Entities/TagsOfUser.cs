@@ -8,5 +8,5 @@ public class TagsOfUser : BaseEntity
     
     public virtual User? User { get; set; }
     
-    public virtual ICollection<BooksOfUser>? Books { get; set; } = null!;
+    public virtual ICollection<BooksOfUser>? BooksOfUsers { get; set; } = null!;
 }

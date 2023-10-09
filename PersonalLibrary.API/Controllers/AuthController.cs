@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Authentication;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +8,8 @@ using PersonalLibrary.API.DTOs.AuthDTOs;
 using PersonalLibrary.API.DTOs.CommunicationDTOs;
 using PersonalLibrary.API.Services;
 using PersonalLibrary.Exceptions;
+using PersonalLibrary.Repository.Entities;
+using PersonalLibrary.Repository.MongoDB.MongoDbEntities;
 
 namespace PersonalLibrary.API.Controllers;
 
@@ -14,12 +18,17 @@ namespace PersonalLibrary.API.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly AuthService _service;
+    private readonly SessionService _sessionService;
+    private readonly UserManager<User> _userManager;
 
-    public AuthController(AuthService service)
+    public AuthController(AuthService service, SessionService sessionService, UserManager<User> userManager)
     {
         _service = service;
+        _sessionService = sessionService;
+        _userManager = userManager;
     }
     
+    [AllowAnonymous]
     [HttpPost("signup")]
     public async Task<IActionResult> SignUpAsync(SignUpDto signUpDto)
     {
@@ -37,11 +46,17 @@ public class AuthController : ControllerBase
         return CreateActionResult(ResponseDto<IdentityResult>.Fail(400, errorList));
     }
     
+    [AllowAnonymous]
     [HttpPost("login")]
     public async Task<IActionResult> SignInAsync(LoginDto loginDto)
     {
         var response = await _service.LoginAsync(loginDto);
-
+        
+        var user = await _userManager.FindByEmailAsync(loginDto.Email);
+        if(user == null) throw new NotFoundException("User not found");
+        
+        await CreateUserSessionAsync(user);
+        
         return CreateActionResult(ResponseDto<AccessTokenDto>.Success(200, response));
     }
     
@@ -96,5 +111,18 @@ public class AuthController : ControllerBase
         { 
             StatusCode = response.StatusCode 
         };
+    }
+    
+    private async Task<LoginDetailsDto> CreateUserSessionAsync(User applicationUser)
+    {
+        if (applicationUser.Email is null)
+            throw new InvalidCredentialException("Email cannot be empty");
+
+        var claims = new List<Claim> { new(ClaimTypes.Email, applicationUser.Email) };
+
+        var appIdentity = new ClaimsIdentity(claims);
+        HttpContext.User.AddIdentity(appIdentity);
+
+        return await _sessionService.CreateSessionAsync(applicationUser);
     }
 }

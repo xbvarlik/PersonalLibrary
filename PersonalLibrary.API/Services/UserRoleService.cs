@@ -52,13 +52,13 @@ public class UserRoleService
         return result;
     }
     
-    public async Task<List<Role>> GetUserRolesAsync(int userId)
+    public async Task<IList<string>> GetUserRolesAsync(int userId)
     {
         var user = await _userManager.FindByIdAsync(userId.ToString());
         
         if (user == null) throw new NotFoundException("User not found");
         
-        return await _userManager.GetRolesAsync(user) as List<Role>;
+        return await _userManager.GetRolesAsync(user);
     }
     
     public async Task<List<User>> GetRoleUsersAsync(int roleId)

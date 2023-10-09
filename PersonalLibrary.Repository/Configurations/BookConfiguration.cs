@@ -35,7 +35,7 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
                 PublishDate = new DateTime(2015, 2, 20),  
                 NumberOfPages = 425,                    
                 Edition = 8,                            
-                CoverImage = "lord_of_the_rings.jpg",   
+                CoverImage = "the_hobbit.jpg",   
                 Isbn = 9789752733732,
             },
             new Book()
@@ -49,7 +49,7 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
                 PublishDate = new DateTime(2017, 7, 29),  
                 NumberOfPages = 450,                    
                 Edition = 1,                            
-                CoverImage = "lord_of_the_rings.jpg",   
+                CoverImage = "harry_potter.jpg",   
                 Isbn = 9780395489321,
             },
             new Book()
@@ -63,7 +63,7 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
                 PublishDate = new DateTime(2021, 8, 15), 
                 NumberOfPages = 707,                    
                 Edition = 16,                            
-                CoverImage = "lord_of_the_rings.jpg",   
+                CoverImage = "dune.jpg",   
                 Isbn = 9786053754794,
             },
             new Book()
@@ -77,7 +77,7 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
                 PublishDate = new DateTime(2020, 12, 9),  
                 NumberOfPages = 432,                    
                 Edition = 4,                            
-                CoverImage = "lord_of_the_rings.jpg",   
+                CoverImage = "the_witcher_the_last_wish.jpg",   
                 Isbn = 9786052291954,
             },
             new Book()
@@ -91,7 +91,7 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
                 PublishDate = new DateTime(2021, 6, 29),  
                 NumberOfPages = 422,                    
                 Edition = 3,                            
-                CoverImage = "lord_of_the_rings.jpg",   
+                CoverImage = "dracula.jpg",   
                 Isbn = 9786053758303,
             },
             new Book()
@@ -105,7 +105,7 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
                 PublishDate = new DateTime(2021, 1, 12),  
                 NumberOfPages = 324,                    
                 Edition = 1,                            
-                CoverImage = "lord_of_the_rings.jpg",   
+                CoverImage = "1984.jpg",   
                 Isbn = 9786257737753,
             },
             new Book()
@@ -119,7 +119,7 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
                 PublishDate = new DateTime(2021, 1, 16),  
                 NumberOfPages = 131,                    
                 Edition = 1,                            
-                CoverImage = "lord_of_the_rings.jpg",   
+                CoverImage = "animal_farm.jpg",   
                 Isbn = 9786257737746,
             },
         });  
