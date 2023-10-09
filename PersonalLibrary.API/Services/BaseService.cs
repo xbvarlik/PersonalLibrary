@@ -34,7 +34,7 @@ public abstract class BaseService<TEntity, TCreateDto, TReadDto, TUpdateDto, TQu
         var entity = _mapper.ToEntity(dto);
         await _context.Set<TEntity>().AddAsync(entity);
         await _context.SaveChangesAsync();
-        return _mapper.ToDto(entity);
+        return _mapper.ToDto(entity, false);
     }
     
     public virtual async Task UpdateAsync(int id, TUpdateDto dto)

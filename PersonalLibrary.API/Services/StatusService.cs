@@ -16,12 +16,12 @@ public class StatusService : BaseService<Status, StatusCreateDto, StatusReadDto,
         var data = _dbSet.AsQueryable();
         data = QuerySpecification(query, data);
         
-        return await data.Include(x => x.Books).ToListAsync();
+        return await data.Include(x => x.BooksOfUsers).ToListAsync();
     }
 
     public override async Task<Status> GetByIdAsync(int id)
     {
-        var entity = await _dbSet.Include(x => x.Books).FirstOrDefaultAsync(x => x.Id == id);
+        var entity = await _dbSet.Include(x => x.BooksOfUsers).FirstOrDefaultAsync(x => x.Id == id);
 
         if (entity == null) throw new NotFoundException();
         

@@ -5,6 +5,9 @@ namespace PersonalLibrary.API.Mappings;
 
 public class BooksOfUserMapper : BaseMapper<BooksOfUser, BooksOfUserCreateDto, BooksOfUserReadDto, BooksOfUserUpdateDto>
 {
+    protected override List<string>? NavigationProperties { get; set; } =
+        new() { nameof(BooksOfUser.User), nameof(BooksOfUser.Book), nameof(BooksOfUser.Status), nameof(BooksOfUser.TagsOfUser) };
+
     public override BooksOfUser ToEntity(BooksOfUserCreateDto dto)
     {
         return new BooksOfUser
@@ -26,7 +29,7 @@ public class BooksOfUserMapper : BaseMapper<BooksOfUser, BooksOfUserCreateDto, B
         return entity;
     }
 
-    public override BooksOfUserReadDto ToDto(BooksOfUser entity)
+    protected override BooksOfUserReadDto MapOtherProperties(BooksOfUser entity)
     {
         return new BooksOfUserReadDto
         {
@@ -34,11 +37,7 @@ public class BooksOfUserMapper : BaseMapper<BooksOfUser, BooksOfUserCreateDto, B
             UserId = entity.UserId,
             BookId = entity.BookId,
             StatusId = entity.StatusId,
-            TagsOfUserId = entity.TagsOfUserId,
-            User = entity.User is null ? null : new UserMapper().ToDto(entity.User),
-            Book = entity.Book is null ? null : new BookMapper().ToDto(entity.Book),
-            Status = entity.Status is null ? null : new StatusMapper().ToDto(entity.Status),
-            TagsOfUser = entity.TagsOfUser is null ? null : new TagsOfUserMapper().ToDto(entity.TagsOfUser)
+            TagsOfUserId = entity.TagsOfUserId
         };
     }
 }

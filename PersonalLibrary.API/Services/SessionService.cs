@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using PersonalLibrary.API.DTOs.AuthDTOs;
 using PersonalLibrary.API.Utilities;
+using PersonalLibrary.Exceptions;
 using PersonalLibrary.Repository.Entities;
 using PersonalLibrary.Repository.MongoDB;
 using PersonalLibrary.Repository.MongoDB.MongoDbEntities;
@@ -32,18 +33,21 @@ public class SessionService
 
     public async Task<Session<LoginDetailsDto>?> GetSessionByAccessTokenAsync(string accessToken)
     {
-        return await _sessionCollection.Find(session => session.Login.AccessToken == accessToken).FirstOrDefaultAsync();
+        var response = await _sessionCollection.Find(session => session.Login.AccessToken == accessToken).FirstOrDefaultAsync();
+        return response;
     }
     
     
     public async Task<LoginDetailsDto> CreateSessionAsync(User user)
     {
         var userRoles = await _userRoleService.GetUserRolesAsync(user.Id);
-        var userRolesString = userRoles.Select(x => x.Name).ToList();
+        
+        if(userRoles is null) throw new NotFoundException("User does not have roles.");
+        
         var token = await _tokenManager.CreateAccessTokenAsync(user);
         
         var login = CreateLoginDetails(user, token);
-        var session = CreteSessionEntity(user, userRolesString, login);
+        var session = CreteSessionEntity(user, userRoles!, login);
 
         await UpsertUserSessionAsync(session);
         return login;
@@ -68,14 +72,14 @@ public class SessionService
         return entity;
     }
 
-    private Session<LoginDetailsDto> CreteSessionEntity(User user, List<string?> userRolesString, LoginDetailsDto login)
+    private Session<LoginDetailsDto> CreteSessionEntity(User user, IList<string> userRoles, LoginDetailsDto login)
     {
         return new Session<LoginDetailsDto>
         {
             UserId = user.Id,
             Agent = _httpContextAccessor.HttpContext!.Request.Headers["User-Agent"].ToString(),
-            Email = user.Email,
-            UserRoles = userRolesString,
+            Email = user.Email!,
+            UserRoles = userRoles,
             Login = login,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow

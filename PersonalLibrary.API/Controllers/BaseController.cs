@@ -33,7 +33,7 @@ public abstract class BaseController<TEntity, TCreateDto, TReadDto, TUpdateDto, 
         if (entities.Count == 0)
             return NoContent();
 
-        var dtos = entities.Select(x => Mapper.ToDto(x)).ToList();
+        var dtos = entities.Select(x => Mapper.ToDto(x, true)).ToList();
         
         var response = ResponseDto<List<TReadDto>>.Success(200, dtos);
         return CreateActionResult(response);
@@ -43,7 +43,7 @@ public abstract class BaseController<TEntity, TCreateDto, TReadDto, TUpdateDto, 
     public virtual async Task<IActionResult> GetByIdAsync([FromRoute] int id)
     {
         var entity = await Service.GetByIdAsync(id);
-        var dto = Mapper.ToDto(entity);
+        var dto = Mapper.ToDto(entity, true);
         
         var response = ResponseDto<TReadDto>.Success(200, dto);
         return CreateActionResult(response);

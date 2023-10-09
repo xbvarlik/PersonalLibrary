@@ -4,5 +4,4 @@ namespace PersonalLibrary.API.Filters;
 
 public class SessionExistsRequirement : IAuthorizationRequirement
 {
-    
 }

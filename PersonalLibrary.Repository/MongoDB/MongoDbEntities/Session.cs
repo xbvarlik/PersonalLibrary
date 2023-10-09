@@ -1,10 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace PersonalLibrary.Repository.MongoDB.MongoDbEntities;
 
 public class Session<TLogin> where TLogin : class
 {
-    public string Id { get; set; } = null!;
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    [BsonElement("_id")]
+    public string Id { get; set; } = null!; // MongoDB requires this property to be named _id
     public int UserId { get; set; }
     
     public string Agent { get; set; } = null!;

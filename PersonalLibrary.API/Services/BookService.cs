@@ -48,7 +48,7 @@ public class BookService : BaseService<Book, BookCreateDto, BookReadDto, BookUpd
         
         await _dbSet.AddAsync(entity);
         await _context.SaveChangesAsync();
-        return _mapper.ToDto(entity);
+        return _mapper.ToDto(entity, false);
     }
 
     public override async Task UpdateAsync(int id, BookUpdateDto dto)

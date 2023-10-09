@@ -21,7 +21,7 @@ public class BookController : BaseController<Book, BookCreateDto, BookReadDto, B
 
         var dtos = entities.Select(x =>
         {
-            var dto = Mapper.ToDto(x);
+            var dto = Mapper.ToDto(x, true);
             
             var image = ImageManager.ReadImageFromLocalStorage(x.CoverImage, Constants.Constants.DefaultImagePath);
             if(image != null) dto.CoverImage = image;
@@ -36,7 +36,7 @@ public class BookController : BaseController<Book, BookCreateDto, BookReadDto, B
     public override async Task<IActionResult> GetByIdAsync(int id)
     {
         var entity = await Service.GetByIdAsync(id);
-        var dto = Mapper.ToDto(entity);
+        var dto = Mapper.ToDto(entity, true);
         
         var image = ImageManager.ReadImageFromLocalStorage(entity.CoverImage, Constants.Constants.DefaultImagePath);
         

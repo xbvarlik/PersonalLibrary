@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -26,8 +27,11 @@ public static class Bootstrapper
 
     public static void ConfigureApplicationSettings(this IServiceCollection services)
     {
-        services.AddSwagger();
+        services.AddHttpContextAccessor();
         services.AddApplicationControllersConfig();
+        
+        services.AddSwagger();
+        services.AddEndpointsApiExplorer();
     }
 
     public static void AddApplicationServicesAndMappers(this IServiceCollection services)
@@ -38,6 +42,14 @@ public static class Bootstrapper
     
     private static void AddApplicationControllersConfig(this IServiceCollection services)
     {
+        services.AddControllers(
+            options =>
+            {
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().AddRequirements(new SessionExistsRequirement()).Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            }
+        );
+        
         services.AddScoped<IAuthorizationHandler, SessionExistsHandler>();
     }
     

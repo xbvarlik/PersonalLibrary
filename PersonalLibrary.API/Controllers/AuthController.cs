@@ -28,6 +28,7 @@ public class AuthController : ControllerBase
         _userManager = userManager;
     }
     
+    [AllowAnonymous]
     [HttpPost("signup")]
     public async Task<IActionResult> SignUpAsync(SignUpDto signUpDto)
     {
@@ -45,13 +46,16 @@ public class AuthController : ControllerBase
         return CreateActionResult(ResponseDto<IdentityResult>.Fail(400, errorList));
     }
     
+    [AllowAnonymous]
     [HttpPost("login")]
     public async Task<IActionResult> SignInAsync(LoginDto loginDto)
     {
         var response = await _service.LoginAsync(loginDto);
         
         var user = await _userManager.FindByEmailAsync(loginDto.Email);
-        await CreateUserSessionAsync(user!);
+        if(user == null) throw new NotFoundException("User not found");
+        
+        await CreateUserSessionAsync(user);
         
         return CreateActionResult(ResponseDto<AccessTokenDto>.Success(200, response));
     }

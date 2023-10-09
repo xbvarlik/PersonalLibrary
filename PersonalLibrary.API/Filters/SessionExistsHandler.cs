@@ -7,11 +7,10 @@ namespace PersonalLibrary.API.Filters;
 
 public class SessionExistsHandler : AuthorizationHandler<SessionExistsRequirement>
 {
-    private readonly HttpContextAccessor _httpContextAccessor;
+    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly SessionCacheService _sessionCacheService;
-
-
-    public SessionExistsHandler(HttpContextAccessor httpContextAccessor, SessionCacheService sessionCacheService)
+    
+    public SessionExistsHandler(IHttpContextAccessor httpContextAccessor, SessionCacheService sessionCacheService)
     {
         _httpContextAccessor = httpContextAccessor;
         _sessionCacheService = sessionCacheService;
