@@ -52,7 +52,9 @@ public abstract class BaseController<TEntity, TCreateDto, TReadDto, TUpdateDto, 
     [HttpPost]
     public virtual async Task<IActionResult> CreateAsync([FromBody] TCreateDto dto)
     {
-        var readDto = await Service.CreateAsync(dto);
+        var userId = HttpContext.Request.Headers.Authorization.ToString();
+        
+        var readDto = await Service.CreateAsync(dto, int.Parse(userId));
         
         var response = ResponseDto<TReadDto>.Success(201, readDto);
         return CreateActionResult(response);
@@ -60,8 +62,10 @@ public abstract class BaseController<TEntity, TCreateDto, TReadDto, TUpdateDto, 
     
     [HttpPut("{id}")]
     public virtual async Task<IActionResult> UpdateAsync([FromRoute] int id, [FromBody] TUpdateDto dto)
-    {
-        await Service.UpdateAsync(id, dto);
+    {        
+        var userId = User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value;
+        
+        await Service.UpdateAsync(id, dto, int.Parse(userId));
         
         var response = ResponseDto<NoContent>.Success(204);
         return CreateActionResult(response);
@@ -70,7 +74,8 @@ public abstract class BaseController<TEntity, TCreateDto, TReadDto, TUpdateDto, 
     [HttpDelete("{id}")]
     public virtual async Task<IActionResult> DeleteAsync([FromRoute] int id)
     {
-        await Service.DeleteAsync(id);
+        var userId = User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value;
+        await Service.DeleteAsync(id, int.Parse(userId));
         
         var response = ResponseDto<NoContent>.Success(204);
         return CreateActionResult(response);

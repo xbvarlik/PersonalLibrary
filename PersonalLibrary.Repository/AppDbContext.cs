@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Windows.Markup;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PersonalLibrary.Repository.Entities;
@@ -15,7 +16,7 @@ public class AppDbContext : IdentityDbContext<User, Role, int>
     public DbSet<Book> Books { get; set; } = null!;
     public DbSet<BooksOfUser> BooksOfUsers { get; set; } = null!;
     public DbSet<AppRefreshToken> AppRefreshTokens { get; set; } = null!;
-
+    
     public AppDbContext()
     {
         
@@ -28,10 +29,6 @@ public class AppDbContext : IdentityDbContext<User, Role, int>
     
     public override int SaveChanges()
     {
-        // CACHE 
-        // CONTEXT
-        // OVERLOAD
-        
         ChangeTracker.Entries().ToList().ForEach(e =>
         {
             if (e.Entity is BaseEntity b)
@@ -77,6 +74,36 @@ public class AppDbContext : IdentityDbContext<User, Role, int>
             }
         });
         
+        return base.SaveChangesAsync(cancellationToken);
+    }
+
+    public Task<int> SaveChangesAsync(int userId, CancellationToken cancellationToken = new CancellationToken())
+    {
+        ChangeTracker.Entries().ToList().ForEach(e =>
+        {
+            if (e.Entity is not BaseEntity b) return;
+            
+            switch (e.State)
+            {
+                case EntityState.Added:
+                    b.CreatedBy = userId;
+                    b.CreatedAt = DateTime.Now;
+                    b.UpdatedBy = userId;
+                    b.UpdatedAt = DateTime.Now;
+                    break;
+                case EntityState.Modified:
+                    b.UpdatedBy = userId;
+                    b.UpdatedAt = DateTime.Now;
+                    break;
+                case EntityState.Deleted:
+                    e.State = EntityState.Modified;
+                    b.DeletedAt = DateTime.Now;
+                    b.DeletedBy = userId;
+                    b.IsDeleted = true;
+                    break;
+            }
+        });
+
         return base.SaveChangesAsync(cancellationToken);
     }
 

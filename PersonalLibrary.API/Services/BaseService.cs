@@ -29,15 +29,15 @@ public abstract class BaseService<TEntity, TCreateDto, TReadDto, TUpdateDto, TQu
     
     public abstract Task<TEntity> GetByIdAsync(int id);
     
-    public virtual async Task<TReadDto> CreateAsync(TCreateDto dto)
+    public virtual async Task<TReadDto> CreateAsync(TCreateDto dto, int userId)
     {
         var entity = _mapper.ToEntity(dto);
         await _context.Set<TEntity>().AddAsync(entity);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(userId);
         return _mapper.ToDto(entity, false);
     }
     
-    public virtual async Task UpdateAsync(int id, TUpdateDto dto)
+    public virtual async Task UpdateAsync(int id, TUpdateDto dto, int userId)
     {
         var entity = await _context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id);
         
@@ -46,17 +46,17 @@ public abstract class BaseService<TEntity, TCreateDto, TReadDto, TUpdateDto, TQu
         entity = _mapper.ToEntity(dto, entity);
         
         _context.Set<TEntity>().Update(entity);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(userId);
         
     }
     
-    public virtual async Task DeleteAsync(int id)
+    public virtual async Task DeleteAsync(int id, int userId)
     {
         var entity = await _context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id);
         if (entity == null) throw new KeyNotFoundException($"Entity not found with id {id}");
         
         _context.Set<TEntity>().Remove(entity);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(userId);
     }
     
     protected IQueryable<TEntity> QuerySpecification(TQueryFilterDto query, IQueryable<TEntity> queryableData)

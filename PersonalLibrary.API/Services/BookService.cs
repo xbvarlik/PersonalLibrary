@@ -38,7 +38,7 @@ public class BookService : BaseService<Book, BookCreateDto, BookReadDto, BookUpd
         return entity;
     }
 
-    public override async Task<BookReadDto> CreateAsync(BookCreateDto dto)
+    public override async Task<BookReadDto> CreateAsync(BookCreateDto dto, int userId)
     {
         var entity = _mapper.ToEntity(dto);
 
@@ -47,11 +47,11 @@ public class BookService : BaseService<Book, BookCreateDto, BookReadDto, BookUpd
         if (image != null) entity.CoverImage = image;
         
         await _dbSet.AddAsync(entity);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(userId);
         return _mapper.ToDto(entity, false);
     }
 
-    public override async Task UpdateAsync(int id, BookUpdateDto dto)
+    public override async Task UpdateAsync(int id, BookUpdateDto dto, int userId)
     {
         var entity = await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
         
@@ -64,6 +64,6 @@ public class BookService : BaseService<Book, BookCreateDto, BookReadDto, BookUpd
         if (image != null) entity.CoverImage = image;
         
         _dbSet.Update(entity);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(userId);
     }
 }
