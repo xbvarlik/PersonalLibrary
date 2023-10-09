@@ -29,6 +29,16 @@ public class AuthorMapper : BaseMapper<Author, AuthorCreateDto, AuthorReadDto, A
             Name = entity.Name,
         };
     }
+
+    public override AuthorReadDto ToDto(Author entity, bool includeNavigationProperties)
+    {
+        var dto = MapOtherProperties(entity);
+
+        if (includeNavigationProperties)
+            dto.Books = entity.Books?.Select(x => new BookMapper().ToDto(x, false)).ToList();
+                
+        return dto;
+    }
 }
 
 

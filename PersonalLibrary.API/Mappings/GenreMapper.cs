@@ -30,4 +30,14 @@ public class GenreMapper : BaseMapper<Genre, GenreCreateDto, GenreReadDto, Genre
             Name = entity.Name,
         };
     }
+    
+    public override GenreReadDto ToDto(Genre entity, bool includeNavigationProperties)
+    {
+        var dto = MapOtherProperties(entity);
+        if (!includeNavigationProperties) return dto;
+        
+        dto.Books = entity.Books?.Select(b => new BookMapper().ToDto(b, false)).ToList();
+
+        return dto;
+    }
 }

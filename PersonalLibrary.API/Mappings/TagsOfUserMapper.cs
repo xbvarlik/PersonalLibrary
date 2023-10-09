@@ -28,7 +28,18 @@ public class TagsOfUserMapper : BaseMapper<TagsOfUser, TagsOfUserCreateDto, Tags
         return new TagsOfUserReadDto
         {
             Id = entity.Id,
-            TagName = entity.TagName
+            TagName = entity.TagName,
+            UserId = entity.UserId
         };
+    }
+
+    public override TagsOfUserReadDto ToDto(TagsOfUser entity, bool includeNavigationProperties)
+    {
+        var dto = MapOtherProperties(entity);
+
+        if (includeNavigationProperties)
+            dto.Books = entity.BooksOfUsers?.Select(x => new BooksOfUserMapper().ToDto(x, false)).ToList();
+        
+        return dto;
     }
 }

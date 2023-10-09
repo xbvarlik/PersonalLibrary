@@ -52,4 +52,16 @@ public class BookMapper : BaseMapper<Book, BookCreateDto, BookReadDto, BookUpdat
             Edition = entity.Edition,
         };
     }
+    
+    public override BookReadDto ToDto(Book entity, bool includeNavigationProperties)
+    {
+        var dto = MapOtherProperties(entity);
+        if (!includeNavigationProperties) return dto;
+        
+        dto.Author = new AuthorMapper().ToDto(entity.Author, false);
+        dto.Genre = new GenreMapper().ToDto(entity.Genre, false);
+        dto.Publisher = new PublisherMapper().ToDto(entity.Publisher, false);
+
+        return dto;
+    }
 }

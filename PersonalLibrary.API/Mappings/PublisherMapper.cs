@@ -29,4 +29,14 @@ public class PublisherMapper : BaseMapper<Publisher, PublisherCreateDto, Publish
             Name = entity.Name,
         };    
     }
+
+    public override PublisherReadDto ToDto(Publisher entity, bool includeNavigationProperties)
+    {
+        var dto = MapOtherProperties(entity);
+
+        if (includeNavigationProperties)
+            dto.Books = entity.Books?.Select(x => new BookMapper().ToDto(x, false)).ToList();
+                
+        return dto;
+    }
 }

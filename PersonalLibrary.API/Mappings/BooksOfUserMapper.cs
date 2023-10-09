@@ -40,4 +40,17 @@ public class BooksOfUserMapper : BaseMapper<BooksOfUser, BooksOfUserCreateDto, B
             TagsOfUserId = entity.TagsOfUserId
         };
     }
+    
+    public override BooksOfUserReadDto ToDto(BooksOfUser entity, bool includeNavigationProperties)
+    {
+        var dto = MapOtherProperties(entity);
+        if (!includeNavigationProperties) return dto;
+        
+        dto.User = new UserMapper().ToDto(entity.User);
+        dto.Book = new BookMapper().ToDto(entity.Book, false);
+        dto.Status = new StatusMapper().ToDto(entity.Status, false);
+        dto.TagsOfUser = new TagsOfUserMapper().ToDto(entity.TagsOfUser, false);
+
+        return dto;
+    }
 }
