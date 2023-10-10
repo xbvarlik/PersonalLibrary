@@ -124,8 +124,6 @@ public static class Bootstrapper
         services.AddScoped<RoleService>();
         
         services.AddScoped<SessionService>();
-        services.AddScoped<SessionCacheService>();
-        services.AddScoped<UserSessionService>();
         
         services.AddScoped<TokenService>();
         

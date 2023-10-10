@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
-using Microsoft.Net.Http.Headers;
 using PersonalLibrary.API.Services;
+using PersonalLibrary.Utilities.Accessors;
 
 namespace PersonalLibrary.API.Filters;
 
 public class SessionExistsHandler : AuthorizationHandler<SessionExistsRequirement>
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly SessionCacheService _sessionCacheService;
+    private readonly ISessionAccessor _sessionAccessor;
+    private readonly SessionService _sessionService;
     
-    public SessionExistsHandler(IHttpContextAccessor httpContextAccessor, SessionCacheService sessionCacheService)
+    public SessionExistsHandler(SessionService sessionService, ISessionAccessor sessionAccessor)
     {
-        _httpContextAccessor = httpContextAccessor;
-        _sessionCacheService = sessionCacheService;
+        _sessionService = sessionService;
+        _sessionAccessor = sessionAccessor;
     }
 
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, SessionExistsRequirement requirement)
@@ -24,8 +24,7 @@ public class SessionExistsHandler : AuthorizationHandler<SessionExistsRequiremen
             return;
         }
 
-        var token = _httpContextAccessor.HttpContext?.Request.Headers[HeaderNames.Authorization].ToString()
-            .Replace("Bearer", "", StringComparison.OrdinalIgnoreCase).Trim();
+        var token = _sessionAccessor.GetAccessToken();
 
         if (string.IsNullOrWhiteSpace(token))
         {
@@ -33,7 +32,7 @@ public class SessionExistsHandler : AuthorizationHandler<SessionExistsRequiremen
             return;
         }
 
-        var session = await _sessionCacheService.GetOrAddAsync(token);
+        var session = await _sessionAccessor.GetOrAddAsync(_sessionService.GetSessionByAccessTokenAsync);
         if (session != default)
             context.Succeed(requirement);
         else

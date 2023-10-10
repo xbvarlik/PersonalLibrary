@@ -2,7 +2,6 @@
 using PersonalLibrary.Cache;
 using PersonalLibrary.Core.DTOs.AuthDTOs;
 using PersonalLibrary.Core.MongoDocuments;
-using PersonalLibrary.Exceptions;
 
 namespace PersonalLibrary.Utilities.Accessors;
 
@@ -14,7 +13,9 @@ public class SessionAccessor : ISessionAccessor
     public SessionAccessor(IHttpContextAccessor httpContextAccessor, ICacheManager cacheManager)
     {
         _cacheManager = cacheManager;
-        _accessToken = httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString().Split(" ")[1];
+        _accessToken = httpContextAccessor.HttpContext.Request.Headers["Authorization"].ToString()
+            .Replace("Bearer", "", StringComparison.OrdinalIgnoreCase)
+            .Trim();
     }
 
     public int AccessUserId()
@@ -29,10 +30,9 @@ public class SessionAccessor : ISessionAccessor
         return userSessionInfo?.UserId ?? 0;
     }
 
-    public async Task<T> GetOrAddAsync<T>(Func<string, Task<T?>> func) where T : class
-    {
-        var userSessionInfo = await _cacheManager.GetOrAddAsync(_accessToken!, func);
-        return userSessionInfo ?? throw new UnauthorizedException();
-    }
+    public async Task<T?> GetOrAddAsync<T>(Func<string, Task<T?>> func) where T : class?
+        => await _cacheManager.GetOrAddAsync(_accessToken!, func);
+    
+    public string? GetAccessToken() => _accessToken;
 }
 
