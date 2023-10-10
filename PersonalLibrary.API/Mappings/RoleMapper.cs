@@ -1,5 +1,5 @@
-﻿using PersonalLibrary.API.DTOs.RoleDTOs;
-using PersonalLibrary.Repository.Entities;
+﻿using PersonalLibrary.Core.DTOs.RoleDTOs;
+using PersonalLibrary.Core.Entities;
 
 namespace PersonalLibrary.API.Mappings;
 

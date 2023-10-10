@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using PersonalLibrary.API.DTOs.AuthDTOs;
-using PersonalLibrary.API.Utilities;
+using PersonalLibrary.Core.DTOs.AuthDTOs;
+using PersonalLibrary.Core.Entities;
 using PersonalLibrary.Exceptions;
 using PersonalLibrary.Repository;
-using PersonalLibrary.Repository.Entities;
+using PersonalLibrary.Utilities.Managers;
 
 namespace PersonalLibrary.API.Services;
 
@@ -12,16 +12,16 @@ public class AuthService
     private readonly AppDbContext _context;
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
-    private readonly TokenManager _tokenManager;
+    private readonly TokenService _tokenService;
     private readonly IConfiguration _configuration;
     private readonly EmailManager _emailManager;
 
-    public AuthService(AppDbContext context, UserManager<User> userManager, SignInManager<User> signInManager, TokenManager tokenManager, EmailManager emailManager, IConfiguration configuration)
+    public AuthService(AppDbContext context, UserManager<User> userManager, SignInManager<User> signInManager, TokenService tokenService, EmailManager emailManager, IConfiguration configuration)
     {
         _context = context;
         _userManager = userManager;
         _signInManager = signInManager;
-        _tokenManager = tokenManager;
+        _tokenService = tokenService;
         _emailManager = emailManager;
         _configuration = configuration;
     }
@@ -57,7 +57,7 @@ public class AuthService
         
         if (!signInResult.Succeeded) throw new InvalidCredentialsException("Invalid credentials");
 
-        var result = await _tokenManager.CreateAccessTokenAsync(user);
+        var result = await _tokenService.CreateAccessTokenAsync(user);
         
         return result;
     }
@@ -68,7 +68,7 @@ public class AuthService
 
         if (user == null) throw new NotFoundException("User not found");
         
-        await _tokenManager.RevokeRefreshTokenAsync(user.Id);
+        await _tokenService.RevokeRefreshTokenAsync(user.Id);
         await _signInManager.SignOutAsync();
     }
 
@@ -76,7 +76,7 @@ public class AuthService
     {
         if (refreshToken == null) throw new TokenNullException("Refresh token not found");
         
-        return await _tokenManager.CreateAccessTokenByRefreshTokenAsync(refreshToken);
+        return await _tokenService.CreateAccessTokenByRefreshTokenAsync(refreshToken);
     }
     
     public async Task<string> ForgotPasswordAsync(string email)

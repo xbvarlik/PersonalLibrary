@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PersonalLibrary.API.DTOs.StatusDTOs;
 using PersonalLibrary.API.Mappings;
 using PersonalLibrary.API.Services;
-using PersonalLibrary.Repository.Entities;
+using PersonalLibrary.Core.DTOs.StatusDTOs;
+using PersonalLibrary.Core.Entities;
 
 namespace PersonalLibrary.API.Controllers;
 

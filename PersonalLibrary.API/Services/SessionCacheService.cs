@@ -1,6 +1,6 @@
-﻿using PersonalLibrary.API.DTOs.AuthDTOs;
-using PersonalLibrary.Cache;
-using PersonalLibrary.Repository.MongoDB.MongoDbEntities;
+﻿using PersonalLibrary.Cache;
+using PersonalLibrary.Core.DTOs.AuthDTOs;
+using PersonalLibrary.Core.MongoDocuments;
 
 namespace PersonalLibrary.API.Services;
 

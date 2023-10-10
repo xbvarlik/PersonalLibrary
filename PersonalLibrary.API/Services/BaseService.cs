@@ -1,9 +1,9 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using PersonalLibrary.API.DTOs.Base;
 using PersonalLibrary.API.Mappings;
+using PersonalLibrary.Core.DTOs.Base;
+using PersonalLibrary.Core.Entities;
 using PersonalLibrary.Repository;
-using PersonalLibrary.Repository.Entities;
 
 namespace PersonalLibrary.API.Services;
 

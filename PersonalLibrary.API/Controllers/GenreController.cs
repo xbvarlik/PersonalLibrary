@@ -1,7 +1,7 @@
-﻿using PersonalLibrary.API.DTOs.GenreDTOs;
-using PersonalLibrary.API.Mappings;
+﻿using PersonalLibrary.API.Mappings;
 using PersonalLibrary.API.Services;
-using PersonalLibrary.Repository.Entities;
+using PersonalLibrary.Core.DTOs.GenreDTOs;
+using PersonalLibrary.Core.Entities;
 
 namespace PersonalLibrary.API.Controllers;
 

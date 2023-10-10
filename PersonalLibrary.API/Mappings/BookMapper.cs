@@ -1,5 +1,5 @@
-﻿using PersonalLibrary.API.DTOs.BookDTOs;
-using PersonalLibrary.Repository.Entities;
+﻿using PersonalLibrary.Core.DTOs.BookDTOs;
+using PersonalLibrary.Core.Entities;
 
 namespace PersonalLibrary.API.Mappings;
 

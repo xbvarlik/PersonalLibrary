@@ -4,12 +4,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PersonalLibrary.API.DTOs.AuthDTOs;
-using PersonalLibrary.API.DTOs.CommunicationDTOs;
 using PersonalLibrary.API.Services;
+using PersonalLibrary.Core.DTOs.AuthDTOs;
+using PersonalLibrary.Core.DTOs.CommunicationDTOs;
+using PersonalLibrary.Core.Entities;
 using PersonalLibrary.Exceptions;
-using PersonalLibrary.Repository.Entities;
-using PersonalLibrary.Repository.MongoDB.MongoDbEntities;
 
 namespace PersonalLibrary.API.Controllers;
 

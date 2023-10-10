@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using PersonalLibrary.API.DTOs.Base;
-using PersonalLibrary.Exceptions;
-using PersonalLibrary.Repository.Entities;
+﻿using PersonalLibrary.Core.DTOs.Base;
+using PersonalLibrary.Core.Entities;
 
 namespace PersonalLibrary.API.Mappings;
 

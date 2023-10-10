@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PersonalLibrary.API.DTOs.BooksOfUserDTOs;
+using PersonalLibrary.API.Core.BooksOfUserDTOs;
 using PersonalLibrary.API.Mappings;
+using PersonalLibrary.Core.DTOs.BooksOfUserDTOs;
+using PersonalLibrary.Core.Entities;
 using PersonalLibrary.Exceptions;
 using PersonalLibrary.Repository;
-using PersonalLibrary.Repository.Entities;
 
 namespace PersonalLibrary.API.Services;
 

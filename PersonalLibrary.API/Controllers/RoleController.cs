@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PersonalLibrary.API.DTOs.CommunicationDTOs;
-using PersonalLibrary.API.DTOs.RoleDTOs;
 using PersonalLibrary.API.Mappings;
 using PersonalLibrary.API.Services;
+using PersonalLibrary.Core.DTOs.CommunicationDTOs;
+using PersonalLibrary.Core.DTOs.RoleDTOs;
 
 namespace PersonalLibrary.API.Controllers;
 

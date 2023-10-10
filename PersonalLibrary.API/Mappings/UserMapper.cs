@@ -1,6 +1,5 @@
-﻿using Microsoft.Extensions.FileProviders.Physical;
-using PersonalLibrary.API.DTOs.UserDTOs;
-using PersonalLibrary.Repository.Entities;
+﻿using PersonalLibrary.Core.DTOs.UserDTOs;
+using PersonalLibrary.Core.Entities;
 
 namespace PersonalLibrary.API.Mappings;
 

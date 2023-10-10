@@ -7,13 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
+using PersonalLibrary.API.Constants;
 using PersonalLibrary.API.Filters;
 using PersonalLibrary.API.Mappings;
 using PersonalLibrary.API.Services;
-using PersonalLibrary.API.Utilities;
+using PersonalLibrary.Core.Entities;
 using PersonalLibrary.Repository;
-using PersonalLibrary.Repository.Entities;
 using PersonalLibrary.Repository.MongoDB;
+using PersonalLibrary.Utilities;
 
 namespace PersonalLibrary.API;
 
@@ -38,6 +39,7 @@ public static class Bootstrapper
     {
         services.AddApplicationServices();
         services.AddApplicationMappers();
+        services.AddUtilities();
     }
     
     private static void AddApplicationControllersConfig(this IServiceCollection services)
@@ -125,8 +127,7 @@ public static class Bootstrapper
         services.AddScoped<SessionCacheService>();
         services.AddScoped<UserSessionService>();
         
-        services.AddScoped<EmailManager>();
-        services.AddScoped<TokenManager>();
+        services.AddScoped<TokenService>();
         
         services.AddScoped<AuthorService>();
         services.AddScoped<BookService>();

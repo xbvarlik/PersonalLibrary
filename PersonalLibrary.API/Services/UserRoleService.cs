@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using PersonalLibrary.Core.Entities;
 using PersonalLibrary.Exceptions;
 using PersonalLibrary.Repository;
-using PersonalLibrary.Repository.Entities;
 
 namespace PersonalLibrary.API.Services;
 

@@ -1,11 +1,10 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using PersonalLibrary.API.DTOs.AuthDTOs;
-using PersonalLibrary.API.Utilities;
+using PersonalLibrary.Core.DTOs.AuthDTOs;
+using PersonalLibrary.Core.Entities;
+using PersonalLibrary.Core.MongoDocuments;
 using PersonalLibrary.Exceptions;
-using PersonalLibrary.Repository.Entities;
 using PersonalLibrary.Repository.MongoDB;
-using PersonalLibrary.Repository.MongoDB.MongoDbEntities;
 
 namespace PersonalLibrary.API.Services;
 
@@ -14,12 +13,12 @@ public class SessionService
     private readonly IMongoCollection<Session<LoginDetailsDto>> _sessionCollection;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly UserRoleService _userRoleService;
-    private readonly TokenManager _tokenManager;
+    private readonly TokenService _tokenService;
 
-    public SessionService(IOptions<MongoDbSettings> dbSettings, IHttpContextAccessor httpContextAccessor, TokenManager tokenManager, UserRoleService userRoleService)
+    public SessionService(IOptions<MongoDbSettings> dbSettings, IHttpContextAccessor httpContextAccessor, TokenService tokenService, UserRoleService userRoleService)
     {
         _httpContextAccessor = httpContextAccessor;
-        _tokenManager = tokenManager;
+        _tokenService = tokenService;
         _userRoleService = userRoleService;
         var client = new MongoClient(dbSettings.Value.ConnectionUri);
         var database = client.GetDatabase(dbSettings.Value.DatabaseName);
@@ -44,7 +43,7 @@ public class SessionService
         
         if(userRoles is null) throw new NotFoundException("User does not have roles.");
         
-        var token = await _tokenManager.CreateAccessTokenAsync(user);
+        var token = await _tokenService.CreateAccessTokenAsync(user);
         
         var login = CreateLoginDetails(user, token);
         var session = CreteSessionEntity(user, userRoles!, login);

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PersonalLibrary.Repository.Entities;
+using PersonalLibrary.Core.Entities;
 
 namespace PersonalLibrary.Repository.Configurations;
 

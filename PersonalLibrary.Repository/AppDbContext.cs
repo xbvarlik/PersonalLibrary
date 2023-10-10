@@ -1,7 +1,8 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PersonalLibrary.Repository.Entities;
+using PersonalLibrary.Core.Entities;
+using PersonalLibrary.Utilities.Accessors;
 
 namespace PersonalLibrary.Repository;
 
@@ -16,22 +17,21 @@ public class AppDbContext : IdentityDbContext<User, Role, int>
     public DbSet<BooksOfUser> BooksOfUsers { get; set; } = null!;
     public DbSet<AppRefreshToken> AppRefreshTokens { get; set; } = null!;
 
-    public AppDbContext()
+    private readonly ISessionAccessor _sessionAccessor;
+    public AppDbContext(ISessionAccessor sessionAccessor)
     {
-        
+        _sessionAccessor = sessionAccessor;
     }
 
-    public AppDbContext(DbContextOptions options) : base(options)
+    public AppDbContext(DbContextOptions options, ISessionAccessor sessionAccessor) : base(options)
     {
-        
+        _sessionAccessor = sessionAccessor;
     }
-    
+
+
     public override int SaveChanges()
     {
-        // CACHE 
-        // CONTEXT
-        // OVERLOAD
-        
+        var userId = _sessionAccessor.AccessUserId();
         ChangeTracker.Entries().ToList().ForEach(e =>
         {
             if (e.Entity is BaseEntity b)
@@ -41,12 +41,17 @@ public class AppDbContext : IdentityDbContext<User, Role, int>
                     case EntityState.Added:
                         b.CreatedAt = DateTime.Now;
                         b.UpdatedAt = DateTime.Now;
+                        b.CreatedBy = userId;
+                        b.UpdatedBy = userId;
                         break;
                     case EntityState.Modified:
                         b.UpdatedAt = DateTime.Now;
+                        b.UpdatedBy = userId;
                         break;
                     case EntityState.Deleted:
                         e.State = EntityState.Modified;
+                        b.DeletedAt = DateTime.Now;
+                        b.DeletedBy = userId;
                         b.IsDeleted = true;
                         break;
                 }
@@ -55,29 +60,36 @@ public class AppDbContext : IdentityDbContext<User, Role, int>
         return base.SaveChanges();
     }
     
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
+        var userId = await _sessionAccessor.AccessUserIdAsync();
         ChangeTracker.Entries().ToList().ForEach(e =>
         {
-            if (e.Entity is not BaseEntity b) return;
-            
-            switch (e.State)
+            if (e.Entity is BaseEntity b)
             {
-                case EntityState.Added:
-                    b.CreatedAt = DateTime.Now;
-                    b.UpdatedAt = DateTime.Now;
-                    break;
-                case EntityState.Modified:
-                    b.UpdatedAt = DateTime.Now;
-                    break;
-                case EntityState.Deleted:
-                    e.State = EntityState.Modified;
-                    b.IsDeleted = true;
-                    break;
+                switch (e.State)
+                {
+                    case EntityState.Added:
+                        b.CreatedAt = DateTime.Now;
+                        b.UpdatedAt = DateTime.Now;
+                        b.CreatedBy = userId;
+                        b.UpdatedBy = userId;
+                        break;
+                    case EntityState.Modified:
+                        b.UpdatedAt = DateTime.Now;
+                        b.UpdatedBy = userId;
+                        break;
+                    case EntityState.Deleted:
+                        e.State = EntityState.Modified;
+                        b.DeletedAt = DateTime.Now;
+                        b.DeletedBy = userId;
+                        b.IsDeleted = true;
+                        break;
+                }
             }
         });
         
-        return base.SaveChangesAsync(cancellationToken);
+        return await base.SaveChangesAsync(cancellationToken);
     }
 
     protected override void OnModelCreating(ModelBuilder builder)

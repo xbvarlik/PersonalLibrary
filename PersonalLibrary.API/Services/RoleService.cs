@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using PersonalLibrary.API.DTOs.RoleDTOs;
 using PersonalLibrary.API.Mappings;
+using PersonalLibrary.Core.DTOs.RoleDTOs;
+using PersonalLibrary.Core.Entities;
 using PersonalLibrary.Exceptions;
 using PersonalLibrary.Repository;
-using PersonalLibrary.Repository.Entities;
 
 namespace PersonalLibrary.API.Services;
 

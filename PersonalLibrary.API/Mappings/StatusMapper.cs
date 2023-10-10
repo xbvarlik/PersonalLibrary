@@ -1,6 +1,6 @@
-﻿using PersonalLibrary.API.DTOs.BooksOfUserDTOs;
-using PersonalLibrary.API.DTOs.StatusDTOs;
-using PersonalLibrary.Repository.Entities;
+﻿
+using PersonalLibrary.Core.DTOs.StatusDTOs;
+using PersonalLibrary.Core.Entities;
 
 namespace PersonalLibrary.API.Mappings;
 

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using PersonalLibrary.API.DTOs.Base;
-using PersonalLibrary.API.DTOs.CommunicationDTOs;
 using PersonalLibrary.API.Mappings;
 using PersonalLibrary.API.Services;
-using PersonalLibrary.Repository.Entities;
+using PersonalLibrary.Core.DTOs.Base;
+using PersonalLibrary.Core.DTOs.CommunicationDTOs;
+using PersonalLibrary.Core.Entities;
 
 namespace PersonalLibrary.API.Controllers;
 

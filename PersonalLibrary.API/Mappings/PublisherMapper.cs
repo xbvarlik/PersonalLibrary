@@ -1,5 +1,5 @@
-﻿using PersonalLibrary.API.DTOs.PublisherDTOs;
-using PersonalLibrary.Repository.Entities;
+﻿using PersonalLibrary.Core.DTOs.PublisherDTOs;
+using PersonalLibrary.Core.Entities;
 
 namespace PersonalLibrary.API.Mappings;
 

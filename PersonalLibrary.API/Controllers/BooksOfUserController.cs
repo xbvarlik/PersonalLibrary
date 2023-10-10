@@ -1,7 +1,8 @@
-﻿using PersonalLibrary.API.DTOs.BooksOfUserDTOs;
+﻿using PersonalLibrary.API.Core.BooksOfUserDTOs;
 using PersonalLibrary.API.Mappings;
 using PersonalLibrary.API.Services;
-using PersonalLibrary.Repository.Entities;
+using PersonalLibrary.Core.DTOs.BooksOfUserDTOs;
+using PersonalLibrary.Core.Entities;
 
 namespace PersonalLibrary.API.Controllers;
 

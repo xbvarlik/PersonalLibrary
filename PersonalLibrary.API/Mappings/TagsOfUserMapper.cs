@@ -1,5 +1,5 @@
-﻿using PersonalLibrary.API.DTOs.TagsOfUserDTOs;
-using PersonalLibrary.Repository.Entities;
+﻿using PersonalLibrary.Core.DTOs.TagsOfUserDTOs;
+using PersonalLibrary.Core.Entities;
 
 namespace PersonalLibrary.API.Mappings;
 

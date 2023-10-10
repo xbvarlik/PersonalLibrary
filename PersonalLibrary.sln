@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalLibrary.Exceptions"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalLibrary.Cache", "PersonalLibrary.Cache\PersonalLibrary.Cache.csproj", "{D5F0DFBE-915B-4783-9C3E-9CD7B9A860A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalLibrary.Utilities", "PersonalLibrary.Utilities\PersonalLibrary.Utilities.csproj", "{144A093E-58A1-461B-A04E-352BB26B9D94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalLibrary.Core", "PersonalLibrary.Core\PersonalLibrary.Core.csproj", "{F0BC6E3D-A9B2-4DC5-B038-CFAD06F6E235}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{D5F0DFBE-915B-4783-9C3E-9CD7B9A860A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5F0DFBE-915B-4783-9C3E-9CD7B9A860A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5F0DFBE-915B-4783-9C3E-9CD7B9A860A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{144A093E-58A1-461B-A04E-352BB26B9D94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{144A093E-58A1-461B-A04E-352BB26B9D94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{144A093E-58A1-461B-A04E-352BB26B9D94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{144A093E-58A1-461B-A04E-352BB26B9D94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0BC6E3D-A9B2-4DC5-B038-CFAD06F6E235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0BC6E3D-A9B2-4DC5-B038-CFAD06F6E235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0BC6E3D-A9B2-4DC5-B038-CFAD06F6E235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0BC6E3D-A9B2-4DC5-B038-CFAD06F6E235}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
